@@ -65,16 +65,13 @@
   /* Career event log */
   .log { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; font-family: var(--mono); font-size: 13px; overflow: hidden; }
   .log-head { display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line); color: var(--muted); background: var(--code-bg); }
-  .log ol { list-style: none; margin: 0; padding: 6px 0; }
+  .log ol { list-style: none; margin: 0; padding: 6px 0 8px; }
   .log li { display: grid; grid-template-columns: 34px 64px minmax(0, 1fr); gap: 10px; padding: 7px 14px; }
   .log li + li { border-top: 1px dashed var(--line); }
   .off { color: var(--muted); font-variant-numeric: tabular-nums; }
   .ts { color: var(--accent); font-variant-numeric: tabular-nums; }
   .msg { color: var(--ink); overflow-wrap: anywhere; }
   .msg b { font-weight: 500; }
-  .log-foot { padding: 8px 14px 12px; color: var(--muted); }
-  .cursor { display: inline-block; width: 8px; height: 14px; background: var(--accent); vertical-align: -2px; animation: blink 1.1s steps(1) infinite; }
-  @keyframes blink { 50% { opacity: 0; } }
 
   /* Sections */
   section > header { display: grid; gap: 6px; margin-bottom: 28px; }
@@ -130,7 +127,7 @@
     .contact { padding: 28px 20px; }
   }
   @media (max-width: 480px) { .skills { grid-template-columns: minmax(0, 1fr); } .wrap { gap: 56px; padding-block: 32px 48px; } }
-  @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } .btn { transition: none; } .btn:hover { transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
   html { scroll-behavior: smooth; }
   body { margin: 0; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); -webkit-font-smoothing: antialiased; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
@@ -163,7 +160,6 @@
         <li><span class="off">3</span><span class="ts">2023-03</span><span class="msg">Joined <b>Antier Solutions</b> as Software Engineer, CeFi</span></li>
         <li><span class="off">4</span><span class="ts">now</span><span class="msg">Shipping BaaS microservices on Kafka and NestJS</span></li>
       </ol>
-      <div class="log-foot">consumer lag: 0 · awaiting next offer <span class="cursor" aria-hidden="true"></span></div>
     </div>
   </section>
 
