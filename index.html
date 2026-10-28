@@ -92,10 +92,9 @@
   .card.feature .cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
   .pipeline { font-family: var(--mono); font-size: 13px; background: var(--code-bg); border-radius: 6px; padding: 14px; overflow-x: auto; white-space: pre; line-height: 1.7; color: var(--ink); align-self: start; }
   .pipeline span { color: var(--accent); }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 4px; }
+  .card .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding: 4px 0 0; }
   .tags li { list-style: none; font-family: var(--mono); font-size: 12px; padding: 3px 8px; border: 1px solid var(--line); border-radius: 4px; color: var(--muted); }
-  .tags { padding-left: 0; }
-  .links { display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; font-weight: 600; }
+  .links { display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; font-size: 14px; font-weight: 600; }
   .links a { text-decoration: none; border-bottom: 2px solid var(--accent); padding-bottom: 1px; }
   .links .note { font-weight: 400; color: var(--muted); font-family: var(--mono); font-size: 12px; }
 
@@ -249,6 +248,25 @@
   const projects = [
     {
       feature: true,
+      kind: 'Work · Antier Solutions',
+      year: '2026',
+      title: 'Enfineo Bank: Admin Dashboards & Microservices',
+      summary: 'Enfineo is a digital bank that combines fiat accounts, IBAN cards and crypto wallets on a Node.js and TypeScript microservices platform. I built its Financial and AML admin dashboards end to end, across 7 of the platform\'s services.',
+      points: [
+        'Split the admin dashboard into Financial and AML views, served from Redis-cached metrics with day, week, month and custom time periods.',
+        'Added cache warm-up over gRPC: the user, KYC, crypto, banking and aggregator services seed dashboard caches on startup and refresh them fault-tolerantly.',
+        'Built paginated flagged-transaction and KYT (Know Your Transaction) APIs over gRPC, integrated with the KYC service.',
+        'Designed role-based access control with granular module and sub-module permissions, a permission-tree UI and master-admin restrictions.',
+        'Logged every admin database change for auditing; added multi-sheet Excel export and bulk campaign export.',
+        'Built the React 18 admin screens: IBAN card volumes in EUR, top-country drill-downs and scrollable KYT tables.',
+      ],
+      pipeline: 'React admin portal\n  <span>→</span> admin-service (REST)\n      <span>⇄ gRPC</span> user · kyc · crypto\n               banking · aggregator\n      <span>→</span> Redis  (dashboard cache)\n      <span>→</span> PostgreSQL (Sequelize)\n\nservices  <span>⇄</span> RabbitMQ (retry + DLQ)',
+      tags: ['Node.js', 'TypeScript', 'Express', 'gRPC', 'RabbitMQ', 'Redis', 'PostgreSQL', 'Sequelize', 'React 18', 'Redux Toolkit', 'RBAC'],
+      links: [{ label: 'enfineo.com', url: 'https://enfineo.com' }],
+      linkNote: 'Client work, code is private',
+    },
+    {
+      feature: true,
       kind: 'Personal project',
       year: '2026',
       title: 'LinkedIn Hiring Post Finder',
@@ -261,46 +279,20 @@
       ],
       pipeline: 'search  <span>→</span> scroll & collect\n        <span>→</span> skip applied (likes)\n        <span>→</span> local skill match\n        <span>→</span> Gemini (JSON schema)\n        <span>→</span> results · CSV / JSON',
       tags: ['JavaScript', 'Chrome Extension (MV3)', 'Gemini API', 'Side panel UI'],
-      links: [],
-      linkNote: 'Source code available on request',
+      links: [{ label: 'Download extension v1.1.0 (.zip)', url: 'linkedin_hiring_post_finder-1.1.0.zip', download: true }],
+      linkNote: 'Unzip, then load it in chrome://extensions with Developer mode on',
     },
     {
       kind: 'Work · Antier Solutions',
       year: '2023 – now',
-      title: 'Banking-as-a-Service & CeFi Platform',
-      summary: 'Backend for fintech products that connect traditional banking workflows with Web3 rails.',
+      title: 'CeFi & Web3 Backend Services',
+      summary: 'Backend services for centralized-finance products that connect traditional banking workflows with Web3 rails.',
       points: [
         'Event-driven NestJS microservices talking over Kafka, RabbitMQ and gRPC.',
         'BullMQ job queues and Redis caching for background processing.',
         'Balance updates wrapped in transactions, with deadlock-safe ordering and retries.',
       ],
-      tags: ['NestJS', 'TypeScript', 'Kafka', 'RabbitMQ', 'gRPC', 'BullMQ', 'Redis', 'PostgreSQL'],
-      links: [],
-      linkNote: 'Client work, code is private',
-    },
-    {
-      kind: 'Work · Antier Solutions',
-      year: '2023 – now',
-      title: 'EVM Chain Watcher',
-      summary: 'A Dockerized TypeScript service that watches EVM blockchains for on-chain wallet activity, with a transaction simulator and a client app for testing.',
-      points: [
-        'Tracks deposits, withdrawals and token transfers with Web3.js.',
-        'Loads chain data with bulk upserts so re-synced blocks never create duplicates.',
-      ],
-      tags: ['TypeScript', 'Node.js', 'Web3.js', 'Docker'],
-      links: [],
-      linkNote: 'Client work, code is private',
-    },
-    {
-      kind: 'Work · Antier Solutions',
-      year: '2023 – now',
-      title: 'Fintech Admin Dashboards',
-      summary: 'React.js dashboards that turn millions of transaction, wallet and user records into KPIs and trend charts for operations teams.',
-      points: [
-        'SQL with GROUP BY and window functions behind each chart.',
-        'Kept fast with indexes, pre-aggregated tables, server-side pagination and Redis.',
-      ],
-      tags: ['React.js', 'PostgreSQL', 'MySQL', 'Redis'],
+      tags: ['NestJS', 'TypeScript', 'Kafka', 'BullMQ', 'Web3.js', 'PostgreSQL'],
       links: [],
       linkNote: 'Client work, code is private',
     },
@@ -323,9 +315,10 @@
 
   document.getElementById('project-list').innerHTML = projects.map(p => {
     const list = `<ul>${p.points.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
-    const links = p.links.length
-      ? p.links.map(l => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join('')
-      : `<span class="note">${esc(p.linkNote)}</span>`;
+    const links = p.links.map(l => l.download
+      ? `<a href="${esc(l.url)}" download>${esc(l.label)} ↓</a>`
+      : `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join('')
+      + (p.linkNote ? `<span class="note">${esc(p.linkNote)}</span>` : '');
     const body = p.feature
       ? `<div class="cols"><div style="display:grid;gap:14px">${`<p>${esc(p.summary)}</p>`}${list}</div><div class="pipeline" aria-label="How it works">${p.pipeline}</div></div>`
       : `<p>${esc(p.summary)}</p>${list}`;
