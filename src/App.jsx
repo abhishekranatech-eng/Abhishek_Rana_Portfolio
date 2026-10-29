@@ -1,7 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
 import { useSmoothScroll, useScrollAnimations } from './motion.js'
 import { FONTS } from './state.js'
-import { Loader, Cursor, Header, SectionIndex } from './components/Chrome.jsx'
+import { Loader, Cursor, Header, ScrollProgress } from './components/Chrome.jsx'
 import { Hero, About, Marquee, Work, Stack, Experience, Contact } from './components/Sections.jsx'
 
 const Stage = lazy(() => import('./three/Stage.jsx'))
@@ -20,7 +20,6 @@ export default function App() {
   const [fontsReady, setFontsReady] = useState(false)
   const [sceneReady, setSceneReady] = useState(false)
   const [entered, setEntered] = useState(false)
-  const [active, setActive] = useState(0)
 
   useEffect(() => {
     waitForFonts().finally(() => setFontsReady(true))
@@ -30,7 +29,7 @@ export default function App() {
   const onEnter = useCallback(() => setEntered(true), [])
 
   useSmoothScroll(entered)
-  useScrollAnimations(entered, setActive)
+  useScrollAnimations(entered)
 
   return (
     <>
@@ -44,7 +43,7 @@ export default function App() {
       <Loader ready={sceneReady} onEnter={onEnter} />
       <Cursor />
       <Header />
-      <SectionIndex active={active} />
+      <ScrollProgress />
       <main className={entered ? 'is-entered' : ''}>
         <Hero />
         <About />

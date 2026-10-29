@@ -32,7 +32,7 @@ export function useSmoothScroll(enabled) {
 
     if (prefersReducedMotion()) return () => document.removeEventListener('click', onClick)
 
-    lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.9 })
+    lenis = new Lenis({ lerp: 0.12 })
     lenis.on('scroll', (e) => {
       sceneState.velocity = e.velocity
       ScrollTrigger.update()
@@ -51,7 +51,7 @@ export function useSmoothScroll(enabled) {
 }
 
 // Wires every scroll-driven effect on the page once the loader has gone.
-export function useScrollAnimations(enabled, onSectionChange) {
+export function useScrollAnimations(enabled) {
   useLayoutEffect(() => {
     if (!enabled) return undefined
 
@@ -64,9 +64,7 @@ export function useScrollAnimations(enabled, onSectionChange) {
           start: 'top 55%',
           end: 'bottom 55%',
           onToggle: (self) => {
-            if (!self.isActive) return
-            sceneState.active = index
-            onSectionChange(index)
+            if (self.isActive) sceneState.active = index
           },
         })
       })
@@ -125,5 +123,5 @@ export function useScrollAnimations(enabled, onSectionChange) {
       mm.revert()
       ctx.revert()
     }
-  }, [enabled, onSectionChange])
+  }, [enabled])
 }

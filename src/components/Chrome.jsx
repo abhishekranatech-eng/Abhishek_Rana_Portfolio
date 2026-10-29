@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { sceneState, SECTIONS } from '../state.js'
-import { prefersReducedMotion, scrollToTarget } from '../motion.js'
+import { sceneState } from '../state.js'
+import { prefersReducedMotion } from '../motion.js'
 
 // Fixed UI around the page: loader, cursor, header, section index and scroll progress.
 
@@ -141,26 +141,8 @@ export function Header() {
   )
 }
 
-export function SectionIndex({ active }) {
-  return (
-    <>
-      <nav className="section-index mono" aria-label="Page sections">
-        {SECTIONS.map((s, i) => (
-          <button
-            key={s.name}
-            type="button"
-            className={i === active ? 'is-active' : ''}
-            onClick={() => scrollToTarget(document.querySelector(`[data-section="${i}"]`))}
-            aria-current={i === active ? 'true' : undefined}
-          >
-            <span className="section-index__num">{String(i).padStart(2, '0')}</span>
-            <span className="section-index__name">{s.name}</span>
-          </button>
-        ))}
-      </nav>
-      <div className="progress" aria-hidden="true"><span className="progress__bar" /></div>
-    </>
-  )
+export function ScrollProgress() {
+  return <div className="progress" aria-hidden="true"><span className="progress__bar" /></div>
 }
 
 export function CopyButton({ value, label }) {

@@ -21,7 +21,7 @@ function Rig({ children }) {
 
     const x = narrow ? 0 : section.x * width / 2
     const y = narrow ? (section.shape === 6 ? -1.6 : height * 0.18) : section.y
-    const scale = narrow ? Math.min(0.66, width / 5.6) : Math.min(1, width / 9.2)
+    const scale = (narrow ? Math.min(0.66, width / 5.6) : Math.min(1, width / 9.2)) * (section.s ?? 1)
 
     g.position.x = THREE.MathUtils.damp(g.position.x, x, 2.2, dt)
     g.position.y = THREE.MathUtils.damp(g.position.y, y, 2.2, dt)

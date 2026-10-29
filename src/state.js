@@ -10,9 +10,9 @@ export const sceneState = {
 }
 
 // One entry per [data-section] element, in page order.
-// shape: which particle model to form. x: horizontal offset as a fraction of half the viewport width.
+// shape: which particle model to form. x: horizontal offset as a fraction of half the viewport width. s: extra scale.
 export const SECTIONS = [
-  { name: 'Intro', shape: 0, x: 0.36, y: 0.15 },
+  { name: 'Intro', shape: 0, x: 0.5, y: 0.35, s: 0.72 },
   { name: 'About', shape: 1, x: -0.5, y: 0 },
   { name: 'Enfineo', shape: 2, x: 0.5, y: 0 },
   { name: 'Lendary', shape: 3, x: 0.5, y: 0 },
