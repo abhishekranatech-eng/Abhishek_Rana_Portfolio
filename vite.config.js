@@ -1,11 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// Relative base so the build works on GitHub Pages under /<repo>/ and on a custom domain alike.
+// GitHub Pages serves this repo's root straight from the main branch, so the
+// source page lives in web/ and `npm run build` writes the built site to the root.
+// Relative base keeps it working under /<repo>/ and on a custom domain alike.
 export default defineConfig({
+  root: 'web',
   base: './',
+  publicDir: '../public',
   plugins: [react()],
   build: {
+    outDir: '..',
+    emptyOutDir: false,
     chunkSizeWarningLimit: 1500,
   },
 })
